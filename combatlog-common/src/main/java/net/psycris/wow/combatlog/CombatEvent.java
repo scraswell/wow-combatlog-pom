@@ -1,9 +1,5 @@
 package net.psycris.wow.combatlog;
 
-import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.Hex;
-
-import javax.xml.bind.DatatypeConverter;
 import java.util.Date;
 import java.util.List;
 
