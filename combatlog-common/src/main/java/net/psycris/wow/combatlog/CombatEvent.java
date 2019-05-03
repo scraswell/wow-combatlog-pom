@@ -1,5 +1,9 @@
 package net.psycris.wow.combatlog;
 
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.binary.Hex;
+
+import javax.xml.bind.DatatypeConverter;
 import java.util.Date;
 import java.util.List;
 
@@ -7,7 +11,7 @@ import java.util.List;
  * A standard combatlog event.
  */
 public class CombatEvent
-        extends EventBase {
+        extends Event {
     /**
      * The event source.
      */
@@ -16,7 +20,7 @@ public class CombatEvent
     /**
      * The source flags.
      */
-    private byte[] sourceFlags;
+    private Integer sourceFlags;
 
     /**
      * The source raid flags.
@@ -31,7 +35,7 @@ public class CombatEvent
     /**
      * The target flags.
      */
-    private byte[] targetFlags;
+    private Integer targetFlags;
 
     /**
      * The target raid flags.
@@ -50,10 +54,23 @@ public class CombatEvent
     }
 
     public Subject getSource() {
+        if (this.source == null) {
+            this.source = new Subject.Builder()
+                    .setId(this.getEventData().get(EventArgs.SOURCE_GUID.getIndex()))
+                    .setName(this.getEventData().get(EventArgs.SOURCE_NAME.getIndex()))
+                    .build();
+        }
+
         return this.source;
     }
 
-    public byte[] getSourceFlags() {
+    public Integer getSourceFlags() {
+        if (this.sourceFlags == null) {
+            this.sourceFlags = Integer.parseInt(
+                    this.getEventData().get(EventArgs.SOURCE_FLAGS.getIndex()).replace("0x", ""),
+                    16);
+        }
+
         return this.sourceFlags;
     }
 
@@ -62,10 +79,23 @@ public class CombatEvent
     }
 
     public Subject getTarget() {
+        if (this.target == null) {
+            this.target = new Subject.Builder()
+                    .setId(this.getEventData().get(EventArgs.TARGET_GUID.getIndex()))
+                    .setName(this.getEventData().get(EventArgs.TARGET_NAME.getIndex()))
+                    .build();
+        }
+
         return this.target;
     }
 
-    public byte[] getTargetFlags() {
+    public Integer getTargetFlags() {
+        if (this.targetFlags == null) {
+            this.targetFlags = Integer.parseInt(
+                    this.getEventData().get(EventArgs.TARGET_FLAGS.getIndex()).replace("0x", ""),
+                    16);
+        }
+
         return this.targetFlags;
     }
 

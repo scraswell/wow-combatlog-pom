@@ -43,4 +43,32 @@ public class Subject {
     public String getName() {
         return this.name;
     }
+
+    public static class Builder {
+        /**
+         * The subject identifier.
+         */
+        private String id;
+
+        /**
+         * The subject name.
+         */
+        private String name;
+
+        public Builder setId(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Subject build() {
+            return new Subject(
+                    this.id,
+                    this.name);
+        }
+    }
 }

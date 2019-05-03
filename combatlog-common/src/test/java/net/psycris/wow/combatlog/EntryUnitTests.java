@@ -4,19 +4,21 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class EntryUnitTests {
+    final EntryParser entryParser = new EntryParser();
+    final EventFactory eventFactory = new EventFactory(this.entryParser);
+
     @Test
     public void canParseKnownEntries() {
         SampleData.getSampleEntries()
-                .forEach(entry -> new Entry.Builder().setRawCombatLogEntry(entry).build());
+                .forEach(entry -> this.entryParser.parse(entry));
     }
 
     @Test
     public void canGetEntryData() {
         final String s = SampleData.getSampleEntries().get(0);
 
-        final Entry sampleEntry = new Entry.Builder()
-                .setRawCombatLogEntry(s)
-                .build();
+        final Entry sampleEntry = this.entryParser
+                .parse(s);
 
         Assert.assertEquals(
                 "COMBAT_LOG_VERSION",
