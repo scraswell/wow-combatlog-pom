@@ -42,5 +42,21 @@ public class EventUnitTests {
         Assert.assertEquals(sampleEntry.getTimestamp(), event.getTimestamp());
         Assert.assertEquals(sampleEntry.getData(), event.getEventData());
         Assert.assertEquals("SPELL_DAMAGE", event.getEvent());
+        Assert.assertTrue(((CombatEvent)event).sourceIsPlayer());
+        Assert.assertFalse(((CombatEvent)event).targetIsPlayer());
+        Assert.assertFalse(((CombatEvent)event).sourceIsPet());
+        Assert.assertFalse(((CombatEvent)event).targetIsPet());
+        Assert.assertFalse(((CombatEvent)event).sourceIsNpc());
+        Assert.assertFalse(((CombatEvent)event).sourceIsNpcControlled());
+        Assert.assertTrue(((CombatEvent)event).sourceIsPlayerControlled());
+        Assert.assertTrue(((CombatEvent)event).sourceIsFriendly());
+        Assert.assertFalse(((CombatEvent)event).sourceIsHostile());
+        Assert.assertFalse(((CombatEvent)event).sourceIsTargeted());
+        Assert.assertTrue(((CombatEvent)event).targetIsNpc());
+        Assert.assertTrue(((CombatEvent)event).targetIsNpcControlled());
+        Assert.assertFalse(((CombatEvent)event).targetIsPlayerControlled());
+        Assert.assertFalse(((CombatEvent)event).targetIsFriendly());
+        Assert.assertTrue(((CombatEvent)event).targetIsHostile());
+        Assert.assertTrue(((CombatEvent)event).targetIsTargeted());
     }
 }
